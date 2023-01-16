@@ -12,7 +12,8 @@ import Input from '../Form/Input';
 import Radio from '../Form/Radio';
 import { Label } from '../Typography/index';
 
-//Add a prop that tells about the user type. Only farm managers or owners get the delete option as a request help type.
+//isAdmin is the new prop added for this assessment exercise. Roles 1,2,5 are owner, manager and extension agent. If those roles are the ones indicated, the user is an admin and can delete the farm.
+
 export default function PureHelpRequestPage({
   onSubmit,
   goBack,
@@ -52,6 +53,7 @@ export default function PureHelpRequestPage({
     console.log(error);
   };
 
+  //For this assessment exercise there is no human involved in the 'request'. The farm gets deleted by the software.
   useEffect(() => {
     const contactInformation = contactMethodSelection === 'email' ? email : phone_number;
     setValue(CONTACT_INFO, contactInformation);
@@ -59,10 +61,12 @@ export default function PureHelpRequestPage({
 
   const submit = (data) => {
     data.support_type = data.support_type.value;
+    console.log(data.support_type);
     data[data[CONTACT_METHOD]] = data.contactInfo;
     data.attachments = {};
     delete data.contactInfo;
     onSubmit(file, data);
+    //put a conditional here to call the confirm modal if delete farm was the support type?
   };
 
   const fileChangeHandler = (event) => {
@@ -75,7 +79,6 @@ export default function PureHelpRequestPage({
 
   return (
     <Form
-      //This is where we'll put that popup to ask about confirmation.
       onSubmit={handleSubmit(submit, onError)}
       buttonGroup={
         <>
