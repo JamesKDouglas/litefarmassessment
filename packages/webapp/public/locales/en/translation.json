@@ -671,7 +671,8 @@
       "OTHER": "Other",
       "REPORT_BUG": "Report a bug",
       "REQUEST_FEATURE": "Request a feature",
-      "REQUEST_INFO": "Request information"
+      "REQUEST_INFO": "Request information",
+      "DELETE_FARM": "Delete farm"
     },
     "PREFERRED_CONTACT": "Preferred contact method",
     "REQUIRED_LABEL": "Required Field",

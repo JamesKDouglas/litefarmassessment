@@ -13,10 +13,12 @@ export default function HelpRequest() {
     dispatch(startSendHelp());
     dispatch(supportFileUpload({ file, form: data }));
   };
+
   const handleBack = () => {
     history.push('/');
   };
-  const { email, phone_number } = useSelector(userFarmSelector);
+
+  const { email, phone_number, is_admin } = useSelector(userFarmSelector);
   const loading = useSelector(isHelpLoadingSelector);
   return (
     <PureHelpRequestPage
@@ -25,6 +27,7 @@ export default function HelpRequest() {
       email={email}
       phone_number={phone_number}
       isLoading={loading}
+      isAdmin={is_admin}
     />
   );
 }

@@ -12,12 +12,20 @@ import Input from '../Form/Input';
 import Radio from '../Form/Radio';
 import { Label } from '../Typography/index';
 
-export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_number, isLoading }) {
+//Add a prop that tells about the user type. Only farm managers or owners get the delete option as a request help type.
+export default function PureHelpRequestPage({
+  onSubmit,
+  goBack,
+  email,
+  phone_number,
+  isLoading,
+  isAdmin,
+}) {
   const [file, setFile] = useState(null);
   const validEmailRegex = RegExp(/^$|^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
   const { register, handleSubmit, watch, control, setValue, formState } = useForm({
     mode: 'onTouched',
-    defaultValues: { 'contact_method': 'email' }
+    defaultValues: { contact_method: 'email' },
   });
 
   const { errors } = formState;
@@ -28,12 +36,17 @@ export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_num
   const SUPPORT_TYPE = 'support_type';
   const CONTACT_INFO = 'contactInfo';
   const { t } = useTranslation(['translation', 'common']);
+
   const supportTypeOptions = [
     { value: 'Request information', label: t('HELP.OPTIONS.REQUEST_INFO') },
     { value: 'Report a bug', label: t('HELP.OPTIONS.REPORT_BUG') },
     { value: 'Request a feature', label: t('HELP.OPTIONS.REQUEST_FEATURE') },
     { value: 'Other', label: t('HELP.OPTIONS.OTHER') },
   ];
+
+  if (isAdmin === true) {
+    supportTypeOptions.splice(3, 0, { value: 'Delete farm', label: t('HELP.OPTIONS.DELETE_FARM') });
+  }
 
   const onError = (error) => {
     console.log(error);
@@ -43,6 +56,7 @@ export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_num
     const contactInformation = contactMethodSelection === 'email' ? email : phone_number;
     setValue(CONTACT_INFO, contactInformation);
   }, [contactMethodSelection]);
+
   const submit = (data) => {
     data.support_type = data.support_type.value;
     data[data[CONTACT_METHOD]] = data.contactInfo;
@@ -50,14 +64,18 @@ export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_num
     delete data.contactInfo;
     onSubmit(file, data);
   };
+
   const fileChangeHandler = (event) => {
     setFile(event.target.files[0]);
   };
+
   const supportType = watch(SUPPORT_TYPE);
   const message = watch(MESSAGE);
   const disabled = Object.keys(errors).length || !supportType || !message || formState.isSubmitting;
+
   return (
     <Form
+      //This is where we'll put that popup to ask about confirmation.
       onSubmit={handleSubmit(submit, onError)}
       buttonGroup={
         <>
