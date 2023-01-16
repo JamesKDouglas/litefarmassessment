@@ -670,7 +670,8 @@
       "OTHER": "Outro",
       "REPORT_BUG": "Reportar um erro",
       "REQUEST_FEATURE": "Solicite um novo recurso de funcionalidade",
-      "REQUEST_INFO": "Pedir informação"
+      "REQUEST_INFO": "Pedir informação",
+      "DELETE_FARM": "Excluir fazenda"
     },
     "PREFERRED_CONTACT": "Método de contato preferido",
     "REQUIRED_LABEL": "Campo Obrigatório",

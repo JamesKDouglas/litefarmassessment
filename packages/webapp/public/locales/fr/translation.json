@@ -671,7 +671,8 @@
       "OTHER": "Autre",
       "REPORT_BUG": "Signaler un bogue",
       "REQUEST_FEATURE": "Suggérer une nouvelle fonctionnalité",
-      "REQUEST_INFO": "Demander des informations"
+      "REQUEST_INFO": "Demander des informations",
+      "DELETE_FARM": "Supprimer la ferme"
     },
     "PREFERRED_CONTACT": "Méthode de contact préférée",
     "REQUIRED_LABEL": "Champ obligatoire",

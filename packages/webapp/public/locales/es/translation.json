@@ -670,7 +670,8 @@
       "OTHER": "Otro",
       "REPORT_BUG": "Reportar error",
       "REQUEST_FEATURE": "Solicite una función",
-      "REQUEST_INFO": "Solicite información"
+      "REQUEST_INFO": "Solicite información",
+      "DELETE_FARM": "Eliminar granja"
     },
     "PREFERRED_CONTACT": "Forma de contacto preferida",
     "REQUIRED_LABEL": "Campo solicitado",
