@@ -51,16 +51,19 @@ export function* supportDeleteFarmSaga({ payload: { confirm } }) {
     // yield put(finishDeleteFarm());
 
     // Just bring the user to the home screen
+    // yield put(postHelpRequestSuccess());
     history.push('/');
+    yield put(finishSendHelp());
   } else {
     console.log('Error deleting farm');
+    yield put(finishSendHelp());
   }
 }
 
 export function* supportFileUploadSaga({ payload: { file, form } }) {
   //Even though the delete farm help ticket is automatically taken care of, I'm leaving the help ticket entry into the table.
 
-  //Consider altering the text of the email sent? It should say something like, "Your farm has been deleted. If this was a mistak, please reach out to the Litefarm team."
+  //Consider altering the text of the email sent? It should say something like, "Your farm has been deleted. If this was a mistake, please reach out to the Litefarm team."
   try {
     const formData = new FormData();
     formData.append('_file_', file);

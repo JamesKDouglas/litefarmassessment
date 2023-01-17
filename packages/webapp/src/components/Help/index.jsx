@@ -71,11 +71,11 @@ export default function PureHelpRequestPage({
 
   const submit = (data) => {
     data.support_type = data.support_type.value;
-
     //If "Delete farm" is the support type, then open the confirm box.
     //The confirm box button is what triggers the actual delete.
     if (data.support_type === 'Delete farm') {
       setOnDelete(!onDelete);
+      return;
     }
 
     data[data[CONTACT_METHOD]] = data.contactInfo;
@@ -113,7 +113,7 @@ export default function PureHelpRequestPage({
               onClose={() => setOnDelete(false)}
               onConfirm={() => handleDeleteFarm()}
               message={t('HELP.CONFIRM_DELETE_FARM')}
-              //option is meant for if you want to change the text of the delete button.
+              //option prop is meant for if you want to change the text of the delete button.
               // option
             >
               {t('common:DELETE')}
