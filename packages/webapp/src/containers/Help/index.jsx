@@ -11,7 +11,11 @@ export default function HelpRequest() {
 
   const handleSubmit = (file, data) => {
     dispatch(startSendHelp());
+    //This sends the form data to the server. It's called SupportFileUpload, which is a bit odd. But it does the job.
+    //Saga runs his supportFileUpload function. It sends an API request to make  support ticket,
+    //and a second api request if a deleteFarm is the support type.
     dispatch(supportFileUpload({ file, form: data }));
+    // dispatch()
   };
 
   const handleBack = () => {
@@ -19,6 +23,7 @@ export default function HelpRequest() {
   };
 
   const { email, phone_number, is_admin } = useSelector(userFarmSelector);
+  // console.log("farm ID:", farm_id);
   const loading = useSelector(isHelpLoadingSelector);
   return (
     <PureHelpRequestPage

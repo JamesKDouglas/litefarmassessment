@@ -24,6 +24,7 @@ export default function PureHelpRequestPage({
 }) {
   const [file, setFile] = useState(null);
   const validEmailRegex = RegExp(/^$|^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+
   const { register, handleSubmit, watch, control, setValue, formState } = useForm({
     mode: 'onTouched',
     defaultValues: { contact_method: 'email' },
@@ -61,12 +62,10 @@ export default function PureHelpRequestPage({
 
   const submit = (data) => {
     data.support_type = data.support_type.value;
-    console.log(data.support_type);
     data[data[CONTACT_METHOD]] = data.contactInfo;
     data.attachments = {};
     delete data.contactInfo;
     onSubmit(file, data);
-    //put a conditional here to call the confirm modal if delete farm was the support type?
   };
 
   const fileChangeHandler = (event) => {
