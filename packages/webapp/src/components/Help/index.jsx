@@ -11,6 +11,7 @@ import TextArea from '../Form/TextArea';
 import Input from '../Form/Input';
 import Radio from '../Form/Radio';
 import { Label } from '../Typography/index';
+import ConfirmModal from '../../components/Modals/Confirm';
 
 //isAdmin is the new prop added for this assessment exercise. Roles 1,2,5 are owner, manager and extension agent. If those roles are the ones indicated, the user is an admin and can delete the farm.
 
@@ -21,8 +22,16 @@ export default function PureHelpRequestPage({
   phone_number,
   isLoading,
   isAdmin,
+  deleteFarm,
 }) {
+  //Do I want to use this? It's kind of like having two switches - just a bit confusing.
+  //both showModal and also onDelete impact showing the modal.
+  // const [showModal, setShowModal] = useState(true);
+
+  const [onDelete, setOnDelete] = useState(false);
+
   const [file, setFile] = useState(null);
+
   const validEmailRegex = RegExp(/^$|^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
 
   const { register, handleSubmit, watch, control, setValue, formState } = useForm({
@@ -62,10 +71,21 @@ export default function PureHelpRequestPage({
 
   const submit = (data) => {
     data.support_type = data.support_type.value;
+
+    //If "Delete farm" is the support type, then open the confirm box.
+    //The confirm box button is what triggers the actual delete.
+    if (data.support_type === 'Delete farm') {
+      setOnDelete(!onDelete);
+    }
+
     data[data[CONTACT_METHOD]] = data.contactInfo;
     data.attachments = {};
     delete data.contactInfo;
     onSubmit(file, data);
+  };
+
+  const handleDeleteFarm = () => {
+    deleteFarm();
   };
 
   const fileChangeHandler = (event) => {
@@ -87,6 +107,18 @@ export default function PureHelpRequestPage({
           <Button type={'submit'} disabled={isLoading || disabled} fullLength>
             {isLoading ? t('common:SUBMITTING') : t('common:SUBMIT')}
           </Button>
+          {!!onDelete && (
+            <ConfirmModal
+              open={true}
+              onClose={() => setOnDelete(false)}
+              onConfirm={() => handleDeleteFarm()}
+              message={t('HELP.CONFIRM_DELETE_FARM')}
+              //option is meant for if you want to change the text of the delete button.
+              // option
+            >
+              {t('common:DELETE')}
+            </ConfirmModal>
+          )}
         </>
       }
     >

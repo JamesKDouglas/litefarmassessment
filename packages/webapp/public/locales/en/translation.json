@@ -680,7 +680,8 @@
     "TYPE_SUPPORT_LABEL": "Type of support",
     "TYPE_SUPPORT_PLACEHOLDER": "Choose type of support",
     "WHATSAPP": "Whatsapp",
-    "WHATSAPP_NUMBER_LABEL": "Whatsapp number"
+    "WHATSAPP_NUMBER_LABEL": "Whatsapp number",
+    "CONFIRM_DELETE_FARM": "Are you sure you want to delete this entire farm? The farm will be gone next time you log in."
   },
   "HOME": {
     "GREETING": "Good day, "

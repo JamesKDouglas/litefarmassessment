@@ -18,6 +18,9 @@ const homeSlice = createSlice({
     startSendHelp: (state) => {
       state.loading = true;
     },
+    startDeleteFarm: (state) => {
+      state.loading = true;
+    },
     finishSendHelp: (state) => {
       state.loading = false;
     },
@@ -29,6 +32,7 @@ export const {
   dismissHelpRequestModal,
   startSendHelp,
   finishSendHelp,
+  startDeleteFarm,
 } = homeSlice.actions;
 export default homeSlice.reducer;
 export const showHelpRequestModalSelector = (state) =>
