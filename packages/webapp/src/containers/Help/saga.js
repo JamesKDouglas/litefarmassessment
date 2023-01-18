@@ -32,26 +32,11 @@ export const supportFileUpload = createAction(`supportFileUploadSaga`);
 export const supportDeleteFarm = createAction('supportDeleteFarmSaga');
 
 export function* supportDeleteFarmSaga({ payload: { confirm } }) {
-  console.log(confirm);
-
   let { user_id, farm_id } = yield select(loginSelector);
   const header = getHeader(user_id, farm_id);
   let result;
-
   result = yield call(axios.delete, deleteFarmUrl(farm_id), header);
-
   if (result) {
-    // Do I want some sort of confirm message box here? Or on the homepage?
-
-    //This yield statement could change the state in the redux store so you get the 48 hr response time popup.
-    // yield put(postDelereFarmSuccess());//if response is 200. If not, output error to console?
-
-    //We could use a similar yield put statement to implement a 'progress' using the snackbar. That is what the help request normally does - just change the state while Saga is working in the background to indicate progress.
-    //As in,
-    // yield put(finishDeleteFarm());
-
-    // Just bring the user to the home screen
-    // yield put(postHelpRequestSuccess());
     history.push('/');
     yield put(finishSendHelp());
   } else {
@@ -61,9 +46,6 @@ export function* supportDeleteFarmSaga({ payload: { confirm } }) {
 }
 
 export function* supportFileUploadSaga({ payload: { file, form } }) {
-  //Even though the delete farm help ticket is automatically taken care of, I'm leaving the help ticket entry into the table.
-
-  //Consider altering the text of the email sent? It should say something like, "Your farm has been deleted. If this was a mistake, please reach out to the Litefarm team."
   try {
     const formData = new FormData();
     formData.append('_file_', file);
