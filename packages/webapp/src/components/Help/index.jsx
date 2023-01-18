@@ -11,13 +11,32 @@ import TextArea from '../Form/TextArea';
 import Input from '../Form/Input';
 import Radio from '../Form/Radio';
 import { Label } from '../Typography/index';
+import ConfirmModal from '../../components/Modals/Confirm';
 
-export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_number, isLoading }) {
+//isAdmin is the new prop added for this assessment exercise. Roles 1,2,5 are owner, manager and extension agent. If those roles are the ones indicated, the user is an admin and can delete the farm.
+
+export default function PureHelpRequestPage({
+  onSubmit,
+  goBack,
+  email,
+  phone_number,
+  isLoading,
+  isAdmin,
+  deleteFarm,
+}) {
+  //Do I want to use this? It's kind of like having two switches - just a bit confusing.
+  //both showModal and also onDelete impact showing the modal.
+  // const [showModal, setShowModal] = useState(true);
+
+  const [onDelete, setOnDelete] = useState(false);
+
   const [file, setFile] = useState(null);
+
   const validEmailRegex = RegExp(/^$|^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+
   const { register, handleSubmit, watch, control, setValue, formState } = useForm({
     mode: 'onTouched',
-    defaultValues: { 'contact_method': 'email' }
+    defaultValues: { contact_method: 'email' },
   });
 
   const { errors } = formState;
@@ -28,6 +47,7 @@ export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_num
   const SUPPORT_TYPE = 'support_type';
   const CONTACT_INFO = 'contactInfo';
   const { t } = useTranslation(['translation', 'common']);
+
   const supportTypeOptions = [
     { value: 'Request information', label: t('HELP.OPTIONS.REQUEST_INFO') },
     { value: 'Report a bug', label: t('HELP.OPTIONS.REPORT_BUG') },
@@ -35,27 +55,47 @@ export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_num
     { value: 'Other', label: t('HELP.OPTIONS.OTHER') },
   ];
 
+  if (isAdmin === true) {
+    supportTypeOptions.splice(3, 0, { value: 'Delete farm', label: t('HELP.OPTIONS.DELETE_FARM') });
+  }
+
   const onError = (error) => {
     console.log(error);
   };
 
+  //For this assessment exercise there is no human involved in the 'request'. The farm gets deleted by the software.
   useEffect(() => {
     const contactInformation = contactMethodSelection === 'email' ? email : phone_number;
     setValue(CONTACT_INFO, contactInformation);
   }, [contactMethodSelection]);
+
   const submit = (data) => {
     data.support_type = data.support_type.value;
+    //If "Delete farm" is the support type, then open the confirm box.
+    //The confirm box button is what triggers the actual delete.
+    if (data.support_type === 'Delete farm') {
+      setOnDelete(!onDelete);
+      return;
+    }
+
     data[data[CONTACT_METHOD]] = data.contactInfo;
     data.attachments = {};
     delete data.contactInfo;
     onSubmit(file, data);
   };
+
+  const handleDeleteFarm = () => {
+    deleteFarm();
+  };
+
   const fileChangeHandler = (event) => {
     setFile(event.target.files[0]);
   };
+
   const supportType = watch(SUPPORT_TYPE);
   const message = watch(MESSAGE);
   const disabled = Object.keys(errors).length || !supportType || !message || formState.isSubmitting;
+
   return (
     <Form
       onSubmit={handleSubmit(submit, onError)}
@@ -67,6 +107,18 @@ export default function PureHelpRequestPage({ onSubmit, goBack, email, phone_num
           <Button type={'submit'} disabled={isLoading || disabled} fullLength>
             {isLoading ? t('common:SUBMITTING') : t('common:SUBMIT')}
           </Button>
+          {!!onDelete && (
+            <ConfirmModal
+              open={true}
+              onClose={() => setOnDelete(false)}
+              onConfirm={() => handleDeleteFarm()}
+              message={t('HELP.CONFIRM_DELETE_FARM')}
+              //option prop is meant for if you want to change the text of the delete button.
+              // option
+            >
+              {t('common:DELETE')}
+            </ConfirmModal>
+          )}
         </>
       }
     >

@@ -17,6 +17,7 @@
     "REPORT_A_BUG": "Report a bug",
     "REQUEST_A_FEATURE": "Request a feature",
     "OTHER": "Other",
+    "DELETE_FARM": "Delete farm",
     "CONTACT_METHOD_HEADER": "Preferred contact method",
     "SUBJECT": "Your LiteFarm request for help"
   },

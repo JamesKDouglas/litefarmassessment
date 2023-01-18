@@ -14,17 +14,36 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import { call, put, takeLeading } from 'redux-saga/effects';
+import { call, put, select, takeLeading } from 'redux-saga/effects';
 import { url } from '../../apiConfig';
 import history from '../../history';
 import { finishSendHelp, postHelpRequestSuccess } from '../Home/homeSlice';
 import i18n from '../../locales/i18n';
 import { axios } from '../saga';
 import { enqueueErrorSnackbar } from '../Snackbar/snackbarSlice';
+import { loginSelector } from '../userFarmSlice';
 
 const supportUrl = () => `${url}/support_ticket`;
 
+const deleteFarmUrl = (farm_id) => `${url}/farm/${farm_id}`;
+
 export const supportFileUpload = createAction(`supportFileUploadSaga`);
+
+export const supportDeleteFarm = createAction('supportDeleteFarmSaga');
+
+export function* supportDeleteFarmSaga({ payload: { confirm } }) {
+  let { user_id, farm_id } = yield select(loginSelector);
+  const header = getHeader(user_id, farm_id);
+  let result;
+  result = yield call(axios.delete, deleteFarmUrl(farm_id), header);
+  if (result) {
+    history.push('/');
+    yield put(finishSendHelp());
+  } else {
+    console.log('Error deleting farm');
+    yield put(finishSendHelp());
+  }
+}
 
 export function* supportFileUploadSaga({ payload: { file, form } }) {
   try {
@@ -37,12 +56,15 @@ export function* supportFileUploadSaga({ payload: { file, form } }) {
         Authorization: 'Bearer ' + localStorage.getItem('id_token'),
       },
     });
+
     if (result) {
       yield put(postHelpRequestSuccess());
       history.push('/');
     } else {
       yield put(enqueueErrorSnackbar(i18n.t('message:ATTACHMENTS.ERROR.FAILED_UPLOAD')));
     }
+
+    console.log('result of sending request for help:', result);
     yield put(finishSendHelp());
   } catch (e) {
     yield put(enqueueErrorSnackbar(i18n.t('message:ATTACHMENTS.ERROR.FAILED_UPLOAD')));
@@ -53,4 +75,18 @@ export function* supportFileUploadSaga({ payload: { file, form } }) {
 
 export default function* supportSaga() {
   yield takeLeading(supportFileUpload.type, supportFileUploadSaga);
+  yield takeLeading(supportDeleteFarm.type, supportDeleteFarmSaga);
+}
+
+export function getHeader(user_id, farm_id, { headers, ...props } = {}) {
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('id_token'),
+      user_id,
+      farm_id,
+      ...headers,
+    },
+    ...props,
+  };
 }

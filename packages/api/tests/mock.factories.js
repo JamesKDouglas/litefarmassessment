@@ -1781,7 +1781,13 @@ async function crop_variety_saleFactory(
 }
 
 function fakeSupportTicket(farm_id, defaultData = {}) {
-  const support_type = ['Request information', 'Report a bug', 'Request a feature', 'Other'];
+  const support_type = [
+    'Request information',
+    'Report a bug',
+    'Request a feature',
+    'Delete farm',
+    'Other',
+  ];
   const contact_method = ['email', 'whatsapp'];
   const status = ['Open', 'Closed', 'In progress'];
   const numberOfImage = faker.datatype.number(10);

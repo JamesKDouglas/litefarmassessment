@@ -21,7 +21,7 @@ class supportTicketModel extends BaseModel {
   }
 
   static get idColumn() {
-    return 'support_ticket_id'
+    return 'support_ticket_id';
   }
 
   static get jsonSchema() {
@@ -32,7 +32,13 @@ class supportTicketModel extends BaseModel {
         support_ticket_id: { type: 'string' },
         support_type: {
           type: 'string',
-          enum: ['Request information', 'Report a bug', 'Request a feature', 'Other'],
+          enum: [
+            'Request information',
+            'Report a bug',
+            'Request a feature',
+            'Delete farm',
+            'Other',
+          ],
         },
         message: { type: 'string' },
         attachments: {
@@ -59,8 +65,7 @@ class supportTicketModel extends BaseModel {
   }
 
   static get relationMappings() {
-    return {
-    }
+    return {};
   }
 }
 

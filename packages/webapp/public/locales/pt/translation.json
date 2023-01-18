@@ -670,7 +670,8 @@
       "OTHER": "Outro",
       "REPORT_BUG": "Reportar um erro",
       "REQUEST_FEATURE": "Solicite um novo recurso de funcionalidade",
-      "REQUEST_INFO": "Pedir informação"
+      "REQUEST_INFO": "Pedir informação",
+      "DELETE_FARM": "Excluir fazenda"
     },
     "PREFERRED_CONTACT": "Método de contato preferido",
     "REQUIRED_LABEL": "Campo Obrigatório",
@@ -678,7 +679,8 @@
     "TYPE_SUPPORT_LABEL": "Tipo de suporte",
     "TYPE_SUPPORT_PLACEHOLDER": "Escolha o tipo de suporte",
     "WHATSAPP": "WhatsApp",
-    "WHATSAPP_NUMBER_LABEL": "Número do WhatsApp"
+    "WHATSAPP_NUMBER_LABEL": "Número do WhatsApp",
+    "CONFIRM_DELETE_FARM": "Tem certeza de que deseja excluir toda esta fazenda? A fazenda desaparecerá na próxima vez que você fizer login."
   },
   "HOME": {
     "GREETING": "Bom dia, "

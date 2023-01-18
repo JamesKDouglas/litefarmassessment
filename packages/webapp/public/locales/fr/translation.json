@@ -671,7 +671,8 @@
       "OTHER": "Autre",
       "REPORT_BUG": "Signaler un bogue",
       "REQUEST_FEATURE": "Suggérer une nouvelle fonctionnalité",
-      "REQUEST_INFO": "Demander des informations"
+      "REQUEST_INFO": "Demander des informations",
+      "DELETE_FARM": "Supprimer la ferme"
     },
     "PREFERRED_CONTACT": "Méthode de contact préférée",
     "REQUIRED_LABEL": "Champ obligatoire",
@@ -679,7 +680,8 @@
     "TYPE_SUPPORT_LABEL": "Type de support",
     "TYPE_SUPPORT_PLACEHOLDER": "Choisissez le type de support",
     "WHATSAPP": "Whatsapp",
-    "WHATSAPP_NUMBER_LABEL": "Numéro Whatsapp"
+    "WHATSAPP_NUMBER_LABEL": "Numéro Whatsapp",
+    "CONFIRM_DELETE_FARM": "Voulez-vous vraiment supprimer l'intégralité de cette batterie de serveurs ? La ferme disparaîtra la prochaine fois que vous vous connecterez."
   },
   "HOME": {
     "GREETING": "Bonjour, "
